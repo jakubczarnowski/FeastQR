@@ -34,6 +34,7 @@ export const env = createEnv({
     NEXT_PUBLIC_SUPABASE_URL: z.string().url(),
     NEXT_PUBLIC_SUPABASE_ANON_KEY: z.string().min(1),
     NEXT_PUBLIC_UMAMI_WEBSITE_ID: z.string().optional(),
+    NEXT_PUBLIC_UMAMI_URL: z.string().optional(),
   },
 
   /**
@@ -48,6 +49,7 @@ export const env = createEnv({
     NEXT_PUBLIC_SUPABASE_ANON_KEY: process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY,
     SUPABASE_SERVICE_KEY: process.env.SUPABASE_SERVICE_KEY,
     NEXT_PUBLIC_UMAMI_WEBSITE_ID: process.env.NEXT_PUBLIC_UMAMI_WEBSITE_ID,
+    NEXT_PUBLIC_UMAMI_URL: process.env.NEXT_PUBLIC_UMAMI_URL,
     LEMONS_SQUEEZY_SIGNATURE_SECRET:
       process.env.LEMONS_SQUEEZY_SIGNATURE_SECRET,
     LEMON_SQUEEZY_API_KEY: process.env.LEMON_SQUEEZY_API_KEY,

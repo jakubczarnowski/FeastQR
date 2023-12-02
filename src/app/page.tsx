@@ -6,6 +6,7 @@ import { Poppins } from "next/font/google";
 import heroImage from "~/assets/hero.png";
 import showcase from "~/assets/showcase.png";
 import showcaseMobile from "~/assets/showcaseMobile.png";
+import Link from "next/link";
 
 const poppins = Poppins({
   weight: ["300", "400", "700"],
@@ -44,12 +45,17 @@ const Homepage = async () => {
               {t("landingPage.section1.description")}
             </p>
             <div className="space-x-5">
-              <Button className="bg-landing-primary">
-                {t("landingPage.section1.getStarted")}
-              </Button>
-              <Button variant="outline">
-                {t("landingPage.section1.learnMore")}
-              </Button>
+              <Link href='/login'>
+                <Button className="bg-landing-primary">
+                  {t("landingPage.section1.getStarted")}
+                </Button>
+              </Link>
+              <Link href='/login'>
+                <Button variant="outline">
+                  {t("landingPage.section1.learnMore")}
+                </Button>
+              </Link>
+            
             </div>
             <div className="flex gap-2">
               <a
@@ -70,7 +76,7 @@ const Homepage = async () => {
                 </div>
               </a>
               <a
-                href="https://www.producthunt.com/posts/feastqr?utm_source=badge-featured&utm_medium=badge&utm_souce=badge-feastqr"
+                href="https://tryhards.space/"
                 target="_blank"
                 className="group flex w-fit items-center gap-3 rounded-xl bg-landing-text py-3 pl-4 pr-8 text-white hover:bg-black"
               >
