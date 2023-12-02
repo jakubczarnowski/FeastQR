@@ -110,7 +110,7 @@ I know, that's a rare request to have. Check out [this](https://github.com/Jaane
 
 👤 **Jakub Czarnowski**
 
-- Twitter: [@twitter.com/akubdev/](https://twitter.com/akubdev)
+- Twitter: [@twitter.com/akubdev/](https://twitter.com/charnowsky)
 - Github: [@jakubczarnowski](https://github.com/jakubczarnowski)
 - LinkedIn: [@https://www.linkedin.com/in/czarnowskijakub/](https://www.linkedin.com/in/czarnowskijakub/)
 
