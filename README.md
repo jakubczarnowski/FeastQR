@@ -10,7 +10,7 @@ FeastQR is a cutting-edge, open-source SaaS online menu system for restaurants. 
 
 - **QR Code Generation**: Facilitate ordering with unique QR codes.
 - **Real-time Menu and Price Management**: Update menus and prices as needed.
-- **Ready to print pdf templates**: Update menus and prices as needed.
+- **Ready to print pdf templates**: Customize your own Menu QR Card!
 
 ## Technology Stack 💻
 
