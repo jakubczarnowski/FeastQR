@@ -1,3 +1,4 @@
+import { type ReactNode } from "react";
 import {
   FormControl,
   FormDescription,
@@ -7,17 +8,31 @@ import {
 } from "../ui/form";
 
 export type FormInputProps = {
-  label?: string;
-  description?: string;
+  label?: ReactNode;
+  description?: ReactNode;
   children: React.ReactNode;
+  className?: string;
+  descriptionClassName?: string;
+  messageClassName?: string;
 };
 
-export const FormInput = ({ label, description, children }: FormInputProps) => (
-  <FormItem>
+export const FormInput = ({
+  label,
+  description,
+  children,
+  className,
+  descriptionClassName,
+  messageClassName,
+}: FormInputProps) => (
+  <FormItem className={className}>
     {label && <FormLabel>{label}</FormLabel>}
     <FormControl>{children}</FormControl>
-    {description && <FormDescription>{description}</FormDescription>}
+    {description && (
+      <FormDescription className={descriptionClassName}>
+        {description}
+      </FormDescription>
+    )}
 
-    <FormMessage />
+    <FormMessage className={messageClassName} />
   </FormItem>
 );

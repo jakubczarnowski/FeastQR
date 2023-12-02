@@ -11,3 +11,6 @@ export type ZodReturnType<
   : T extends (t: TFunction) => ZodAnySchema
   ? z.infer<ReturnType<T>>
   : never;
+
+export type WithRequired<T, K extends keyof T> = Omit<T, K> &
+  Required<Pick<T, K>>;

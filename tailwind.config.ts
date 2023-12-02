@@ -1,4 +1,5 @@
 import { type Config } from "tailwindcss";
+
 export default {
   darkMode: ["class"],
   content: [
@@ -50,6 +51,12 @@ export default {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
+        landing: {
+          primary: "#FF811A",
+          secondary: "#696969",
+          text: "#1C1C1C",
+          accent: "#7824CC",
+        },
       },
       borderRadius: {
         lg: "var(--radius)",
@@ -72,5 +79,9 @@ export default {
       },
     },
   },
-  plugins: [require("tailwindcss-animate")],
+  plugins: [
+    require("tailwindcss-animate"),
+    // eslint-disable-next-line @typescript-eslint/no-var-requires
+    require("tailwind-scrollbar")({ nocompatible: true }),
+  ],
 } satisfies Config;

@@ -34,33 +34,415 @@ export interface Database {
   }
   public: {
     Tables: {
+      categories: {
+        Row: {
+          created_at: string
+          id: string
+          menu_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          menu_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          menu_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "categories_menu_id_fkey"
+            columns: ["menu_id"]
+            referencedRelation: "menus"
+            referencedColumns: ["id"]
+          }
+        ]
+      }
+      categories_translation: {
+        Row: {
+          category_id: string
+          language_id: string
+          name: string
+        }
+        Insert: {
+          category_id: string
+          language_id: string
+          name: string
+        }
+        Update: {
+          category_id?: string
+          language_id?: string
+          name?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "categories_translation_category_id_fkey"
+            columns: ["category_id"]
+            referencedRelation: "categories"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "categories_translation_language_id_fkey"
+            columns: ["language_id"]
+            referencedRelation: "languages"
+            referencedColumns: ["id"]
+          }
+        ]
+      }
+      dish_variants: {
+        Row: {
+          created_at: string | null
+          dish_id: string
+          id: string
+          price: number | null
+        }
+        Insert: {
+          created_at?: string | null
+          dish_id: string
+          id?: string
+          price?: number | null
+        }
+        Update: {
+          created_at?: string | null
+          dish_id?: string
+          id?: string
+          price?: number | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "dish_variants_dish_id_fkey"
+            columns: ["dish_id"]
+            referencedRelation: "dishes"
+            referencedColumns: ["id"]
+          }
+        ]
+      }
+      dishes: {
+        Row: {
+          calories: number | null
+          carbohydrates: number | null
+          category_id: string | null
+          created_at: string
+          fats: number | null
+          id: string
+          menu_id: string
+          picture_url: string | null
+          price: number
+          protein: number | null
+          weight: number | null
+        }
+        Insert: {
+          calories?: number | null
+          carbohydrates?: number | null
+          category_id?: string | null
+          created_at?: string
+          fats?: number | null
+          id?: string
+          menu_id: string
+          picture_url?: string | null
+          price: number
+          protein?: number | null
+          weight?: number | null
+        }
+        Update: {
+          calories?: number | null
+          carbohydrates?: number | null
+          category_id?: string | null
+          created_at?: string
+          fats?: number | null
+          id?: string
+          menu_id?: string
+          picture_url?: string | null
+          price?: number
+          protein?: number | null
+          weight?: number | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "dishes_category_id_fkey"
+            columns: ["category_id"]
+            referencedRelation: "categories"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "dishes_menu_id_fkey"
+            columns: ["menu_id"]
+            referencedRelation: "menus"
+            referencedColumns: ["id"]
+          }
+        ]
+      }
+      dishes_tag: {
+        Row: {
+          dish_id: string | null
+          tag_name: Database["public"]["Enums"]["tag_type"]
+        }
+        Insert: {
+          dish_id?: string | null
+          tag_name: Database["public"]["Enums"]["tag_type"]
+        }
+        Update: {
+          dish_id?: string | null
+          tag_name?: Database["public"]["Enums"]["tag_type"]
+        }
+        Relationships: [
+          {
+            foreignKeyName: "dishes_tag_dish_id_fkey"
+            columns: ["dish_id"]
+            referencedRelation: "dishes"
+            referencedColumns: ["id"]
+          }
+        ]
+      }
+      dishes_translation: {
+        Row: {
+          description: string | null
+          dish_id: string
+          language_id: string
+          name: string
+        }
+        Insert: {
+          description?: string | null
+          dish_id: string
+          language_id: string
+          name: string
+        }
+        Update: {
+          description?: string | null
+          dish_id?: string
+          language_id?: string
+          name?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "dishes_translation_dish_id_fkey"
+            columns: ["dish_id"]
+            referencedRelation: "dishes"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "dishes_translation_language_id_fkey"
+            columns: ["language_id"]
+            referencedRelation: "languages"
+            referencedColumns: ["id"]
+          }
+        ]
+      }
+      languages: {
+        Row: {
+          flag_url: string
+          id: string
+          iso_code: string
+          name: string
+        }
+        Insert: {
+          flag_url?: string
+          id?: string
+          iso_code: string
+          name: string
+        }
+        Update: {
+          flag_url?: string
+          id?: string
+          iso_code?: string
+          name?: string
+        }
+        Relationships: []
+      }
+      menu_languages: {
+        Row: {
+          is_default: boolean
+          language_id: string
+          menu_id: string
+        }
+        Insert: {
+          is_default?: boolean
+          language_id: string
+          menu_id: string
+        }
+        Update: {
+          is_default?: boolean
+          language_id?: string
+          menu_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "menu_languages_language_id_fkey"
+            columns: ["language_id"]
+            referencedRelation: "languages"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "menu_languages_menu_id_fkey"
+            columns: ["menu_id"]
+            referencedRelation: "menus"
+            referencedColumns: ["id"]
+          }
+        ]
+      }
+      menus: {
+        Row: {
+          address: string
+          background_image_url: string | null
+          city: string
+          contact_number: string | null
+          created_at: string
+          facebook_url: string | null
+          google_review_url: string | null
+          id: string
+          instagram_url: string | null
+          is_published: boolean
+          logo_image_url: string | null
+          name: string
+          slug: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          address: string
+          background_image_url?: string | null
+          city: string
+          contact_number?: string | null
+          created_at?: string
+          facebook_url?: string | null
+          google_review_url?: string | null
+          id?: string
+          instagram_url?: string | null
+          is_published?: boolean
+          logo_image_url?: string | null
+          name: string
+          slug: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          address?: string
+          background_image_url?: string | null
+          city?: string
+          contact_number?: string | null
+          created_at?: string
+          facebook_url?: string | null
+          google_review_url?: string | null
+          id?: string
+          instagram_url?: string | null
+          is_published?: boolean
+          logo_image_url?: string | null
+          name?: string
+          slug?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "menus_user_id_fkey"
+            columns: ["user_id"]
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          }
+        ]
+      }
       profiles: {
         Row: {
-          avatar_url: string | null
-          email: string | null
+          email: string
           full_name: string | null
           id: string
           updated_at: string | null
+          username: string | null
         }
         Insert: {
-          avatar_url?: string | null
-          email?: string | null
+          email: string
           full_name?: string | null
           id: string
           updated_at?: string | null
+          username?: string | null
         }
         Update: {
-          avatar_url?: string | null
-          email?: string | null
+          email?: string
           full_name?: string | null
           id?: string
           updated_at?: string | null
+          username?: string | null
         }
         Relationships: [
           {
             foreignKeyName: "profiles_id_fkey"
             columns: ["id"]
             referencedRelation: "users"
+            referencedColumns: ["id"]
+          }
+        ]
+      }
+      subscriptions: {
+        Row: {
+          created_at: string | null
+          ends_at: string | null
+          json_data: Json
+          lemon_squeezy_id: string
+          profile_id: string
+          renews_at: string
+          status: string
+          update_payment_url: string
+        }
+        Insert: {
+          created_at?: string | null
+          ends_at?: string | null
+          json_data: Json
+          lemon_squeezy_id: string
+          profile_id: string
+          renews_at: string
+          status: string
+          update_payment_url: string
+        }
+        Update: {
+          created_at?: string | null
+          ends_at?: string | null
+          json_data?: Json
+          lemon_squeezy_id?: string
+          profile_id?: string
+          renews_at?: string
+          status?: string
+          update_payment_url?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "subscriptions_profile_id_fkey"
+            columns: ["profile_id"]
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          }
+        ]
+      }
+      variant_translations: {
+        Row: {
+          description: string | null
+          dish_variant_id: string
+          language_id: string
+          name: string
+        }
+        Insert: {
+          description?: string | null
+          dish_variant_id: string
+          language_id: string
+          name: string
+        }
+        Update: {
+          description?: string | null
+          dish_variant_id?: string
+          language_id?: string
+          name?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "variant_translations_dish_variant_id_fkey"
+            columns: ["dish_variant_id"]
+            referencedRelation: "dish_variants"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "variant_translations_language_id_fkey"
+            columns: ["language_id"]
+            referencedRelation: "languages"
             referencedColumns: ["id"]
           }
         ]
@@ -73,7 +455,26 @@ export interface Database {
       [_ in never]: never
     }
     Enums: {
-      [_ in never]: never
+      continents:
+        | "Africa"
+        | "Antarctica"
+        | "Asia"
+        | "Europe"
+        | "Oceania"
+        | "North America"
+        | "South America"
+      tag_type:
+        | "keto"
+        | "vegan"
+        | "vegetarian"
+        | "low_carb"
+        | "sugar_free"
+        | "low_fat"
+        | "high_protein"
+        | "high_fiber"
+        | "organic"
+        | "gluten_free"
+        | "lactose_free"
     }
     CompositeTypes: {
       [_ in never]: never

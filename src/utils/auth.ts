@@ -1,8 +1,7 @@
-import { cache } from "react";
 import { cookies } from "next/headers";
 import { supabase } from "~/server/supabase/supabaseClient";
 
-export const getServerUser = cache(async () => {
+export const getServerUser = async () => {
   const ckies = cookies();
   const mappedCookies = new Map(ckies);
   const accessToken = mappedCookies.get("access-token")?.value;
@@ -28,4 +27,4 @@ export const getServerUser = cache(async () => {
   }
 
   return data;
-});
+};

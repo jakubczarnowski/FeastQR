@@ -284,17 +284,189 @@ model Users {
   @@schema("auth")
 }
 
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model Categories {
+  id                    String                  @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  menuId                String                  @map("menu_id") @db.Uuid
+  createdAt             DateTime                @default(now()) @map("created_at") @db.Timestamptz(6)
+  menus                 Menus                   @relation(fields: [menuId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  categoriesTranslation CategoriesTranslation[]
+  dishes                Dishes[]
+
+  @@map("categories")
+  @@schema("public")
+}
+
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model CategoriesTranslation {
+  categoryId String     @map("category_id") @db.Uuid
+  name       String
+  languageId String     @map("language_id") @db.Uuid
+  categories Categories @relation(fields: [categoryId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  languages  Languages  @relation(fields: [languageId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@id([categoryId, languageId])
+  @@map("categories_translation")
+  @@schema("public")
+}
+
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model Dishes {
+  id                String              @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  price             Int
+  pictureUrl        String?             @map("picture_url")
+  createdAt         DateTime            @default(now()) @map("created_at") @db.Timestamptz(6)
+  menuId            String              @map("menu_id") @db.Uuid
+  categoryId        String?             @map("category_id") @db.Uuid
+  carbohydrates     Int?
+  fats              Int?
+  protein           Int?
+  weight            Int?
+  calories          Int?
+  dishVariants      DishVariants[]
+  categories        Categories?         @relation(fields: [categoryId], references: [id], onUpdate: NoAction)
+  menus             Menus               @relation(fields: [menuId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  dishesTag         DishesTag[]
+  dishesTranslation DishesTranslation[]
+
+  @@map("dishes")
+  @@schema("public")
+}
+
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model DishesTag {
+  dishId  String? @map("dish_id") @db.Uuid
+  tagName TagType @id @map("tag_name")
+  dishes  Dishes? @relation(fields: [dishId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@map("dishes_tag")
+  @@schema("public")
+}
+
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model DishesTranslation {
+  dishId      String    @map("dish_id") @db.Uuid
+  languageId  String    @map("language_id") @db.Uuid
+  name        String
+  description String?
+  dishes      Dishes    @relation(fields: [dishId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  languages   Languages @relation(fields: [languageId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@id([dishId, languageId])
+  @@map("dishes_translation")
+  @@schema("public")
+}
+
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model Languages {
+  id                    String                  @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  name                  String                  @unique
+  isoCode               String                  @map("iso_code")
+  flagUrl               String                  @default("''") @map("flag_url")
+  categoriesTranslation CategoriesTranslation[]
+  dishesTranslation     DishesTranslation[]
+  menuLanguages         MenuLanguages[]
+  variantTranslations   VariantTranslations[]
+
+  @@map("languages")
+  @@schema("public")
+}
+
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model MenuLanguages {
+  menuId     String    @map("menu_id") @db.Uuid
+  languageId String    @map("language_id") @db.Uuid
+  isDefault  Boolean   @default(false) @map("is_default")
+  languages  Languages @relation(fields: [languageId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  menus      Menus     @relation(fields: [menuId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@id([menuId, languageId])
+  @@map("menu_languages")
+  @@schema("public")
+}
+
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model Menus {
+  id                 String          @id(map: "menu_pkey") @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  name               String
+  userId             String          @map("user_id") @db.Uuid
+  slug               String          @unique(map: "menu_slug_key")
+  backgroundImageUrl String?         @map("background_image_url")
+  city               String
+  address            String
+  isPublished        Boolean         @default(false) @map("is_published")
+  updatedAt          DateTime        @default(now()) @map("updated_at") @db.Timestamptz(6)
+  createdAt          DateTime        @default(now()) @map("created_at") @db.Timestamptz(6)
+  contactNumber      String?         @map("contact_number")
+  facebookUrl        String?         @map("facebook_url")
+  googleReviewUrl    String?         @map("google_review_url")
+  instagramUrl       String?         @map("instagram_url")
+  logoImageUrl       String?         @map("logo_image_url")
+  categories         Categories[]
+  dishes             Dishes[]
+  menuLanguages      MenuLanguages[]
+  profiles           Profiles        @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@index([slug], map: "idx_menus_slug")
+  @@map("menus")
+  @@schema("public")
+}
+
 /// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
 /// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
 model Profiles {
-  id        String    @id @db.Uuid
-  updatedAt DateTime? @map("updated_at") @db.Timestamptz(6)
-  email     String?   @unique
-  fullName  String?   @map("full_name")
-  avatarUrl String?   @map("avatar_url")
-  users     Users     @relation(fields: [id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  id            String         @id @db.Uuid
+  updatedAt     DateTime?      @map("updated_at") @db.Timestamptz(6)
+  username      String?        @unique
+  fullName      String?        @map("full_name")
+  email         String         @unique
+  menus         Menus[]
+  users         Users          @relation(fields: [id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  subscriptions Subscriptions?
 
   @@map("profiles")
+  @@schema("public")
+}
+
+model Subscriptions {
+  profileId        String    @id @map("profile_id") @db.Uuid
+  updatePaymentUrl String    @map("update_payment_url")
+  renewsAt         DateTime  @map("renews_at") @db.Timestamptz(6)
+  endsAt           DateTime? @map("ends_at") @db.Timestamptz(6)
+  status           String
+  createdAt        DateTime? @map("created_at") @db.Timestamptz(6)
+  lemonSqueezyId   String    @map("lemon_squeezy_id")
+  jsonData         Json      @map("json_data")
+  profiles         Profiles  @relation(fields: [profileId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+
+  @@map("subscriptions")
+  @@schema("public")
+}
+
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model DishVariants {
+  id                  String                @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  price               Int?
+  dishId              String                @map("dish_id") @db.Uuid
+  createdAt           DateTime?             @default(now()) @map("created_at") @db.Timestamptz(6)
+  dishes              Dishes                @relation(fields: [dishId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  variantTranslations VariantTranslations[]
+
+  @@map("dish_variants")
+  @@schema("public")
+}
+
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model VariantTranslations {
+  languageId    String       @map("language_id") @db.Uuid
+  dishVariantId String       @map("dish_variant_id") @db.Uuid
+  name          String
+  description   String?
+  dishVariants  DishVariants @relation(fields: [dishVariantId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  languages     Languages    @relation(fields: [languageId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@id([languageId, dishVariantId])
+  @@map("variant_translations")
   @@schema("public")
 }
 
@@ -329,4 +501,34 @@ enum FactorType {
 
   @@map("factor_type")
   @@schema("auth")
+}
+
+enum Continents {
+  Africa
+  Antarctica
+  Asia
+  Europe
+  Oceania
+  North_America @map("North America")
+  South_America @map("South America")
+
+  @@map("continents")
+  @@schema("public")
+}
+
+enum TagType {
+  keto
+  vegan
+  vegetarian
+  low_carb
+  sugar_free
+  low_fat
+  high_protein
+  high_fiber
+  organic
+  gluten_free
+  lactose_free
+
+  @@map("tag_type")
+  @@schema("public")
 }

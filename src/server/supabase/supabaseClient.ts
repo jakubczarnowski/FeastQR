@@ -34,3 +34,7 @@ export const getUserAsAdmin = async (token: string) => {
 
   return data;
 };
+
+export const storageBucketsNames = {
+  menus: "menus-files",
+} as const;

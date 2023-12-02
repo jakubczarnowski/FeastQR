@@ -31,11 +31,11 @@ const languagesMap: LanguageMap = {
 };
 
 export function LanguageToggle() {
-  const [, i18n] = useTranslation();
+  const [t, i18n] = useTranslation();
   const router = useRouter();
-
-  const handleChangeLanguage = (language: Language) => {
-    void i18n.changeLanguage(language);
+  const handleChangeLanguage = async (language: Language) => {
+    await i18n.changeLanguage(language);
+    await i18n.changeLanguage(language);
     router.refresh();
   };
 
@@ -44,14 +44,14 @@ export function LanguageToggle() {
       <DropdownMenuTrigger asChild>
         <Button variant="ghost" size="sm" className="h-8 w-8 px-0">
           <Icons.languages />
-          <span className="sr-only">Toggle language</span>
+          <span className="sr-only">{t("languageToggle.toggleLanguage")}</span>
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
         {Object.entries(languagesMap).map(([language, { label, icon }]) => (
           <DropdownMenuItem
             key={language}
-            onClick={() => handleChangeLanguage(language as Language)}
+            onClick={() => void handleChangeLanguage(language as Language)}
           >
             <span className="mr-2">{icon}</span>
             <span>{label}</span>

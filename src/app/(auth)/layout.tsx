@@ -1,16 +1,25 @@
-import { type PropsWithChildren } from "react";
-import { Icons } from "~/components/Icons";
-import { Button } from "~/components/ui/button";
-import { DevLoginButtons } from "./_components/DevLoginButtons";
-import { useServerTranslation } from "~/i18n";
-import { PublicRoute } from "~/components/PublicRoute/PublicRoute";
-import Link from "next/link";
+"use client";
 
-const Layout = async ({ children }: PropsWithChildren) => {
-  const { t } = await useServerTranslation();
+import Link from "next/link";
+import { type PropsWithChildren } from "react";
+import { useTranslation } from "react-i18next";
+import { Icons } from "~/components/Icons";
+import { Navbar } from "~/components/Navbar/Navbar";
+import { Button } from "~/components/ui/button";
+import { withPublicRoute } from "~/providers/AuthProvider/withPublicRoute";
+import { supabase } from "~/server/supabase/supabaseClient";
+
+const testAccounts = [
+  { email: "random@gmail.com", password: "testPassword" },
+  { email: "random2@gmail.com", password: "testPassword2" },
+];
+
+const Layout = ({ children }: PropsWithChildren) => {
+  const { t } = useTranslation();
 
   return (
-    <PublicRoute>
+    <>
+      <Navbar />
       <div className="container relative flex h-full w-full grow flex-col items-center justify-center">
         <Link href="/">
           <Button
@@ -25,11 +34,30 @@ const Layout = async ({ children }: PropsWithChildren) => {
         </Link>
         {children}
         {process.env.NEXT_PUBLIC_VERCEL_ENV !== "production" && (
-          <DevLoginButtons />
+          <div className="flex flex-col gap-2">
+            {testAccounts.map((account, index) => (
+              <div key={index} className="flex flex-col items-start ">
+                <button
+                  onClick={() => {
+                    void supabase().auth.signInWithPassword(account);
+                  }}
+                >
+                  Login {account.email}
+                </button>
+                <button
+                  onClick={() => {
+                    void supabase().auth.signUp(account);
+                  }}
+                >
+                  Register {account.email}
+                </button>
+              </div>
+            ))}
+          </div>
         )}
       </div>
-    </PublicRoute>
+    </>
   );
 };
 
-export default Layout;
+export default withPublicRoute(Layout);

@@ -1,27 +1,30 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { type TFunction } from "i18next";
+import { type Provider } from "@supabase/supabase-js";
 import * as React from "react";
 import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
-import { z } from "zod";
 
 import { FormInput } from "~/components/FormInput/FormInput";
-import { Button } from "~/components/ui/button";
+import { Icons } from "~/components/Icons";
+import { Button, buttonVariants } from "~/components/ui/button";
 import { Form, FormField } from "~/components/ui/form";
 import { Input } from "~/components/ui/input";
 import { useToast } from "~/components/ui/use-toast";
 import { supabase } from "~/server/supabase/supabaseClient";
-import { type ZodReturnType } from "~/utils";
+import { cn } from "~/utils/cn";
+import {
+  type LoginFormValues,
+  loginValidationSchema,
+} from "./UserAuthForm.schema";
 
-const loginValidationSchema = (translate: TFunction) =>
-  z.object({
-    email: z.string().email(),
-    password: z.string().min(8, translate("register.passwordLengthValidation")),
+const signInWithOauth = (provider: Provider) => {
+  void supabase().auth.signInWithOAuth({
+    provider: provider,
+    options: { redirectTo: `${window.location.origin}/dashboard` },
   });
-
-type LoginFormValues = ZodReturnType<typeof loginValidationSchema>;
+};
 
 export function UserAuthForm() {
   const { t } = useTranslation();
@@ -72,8 +75,20 @@ export function UserAuthForm() {
             </FormInput>
           )}
         />
-        <Button type="submit">{t("login.submitButton")}</Button>
+        <Button loading={form.formState.isSubmitting} type="submit">
+          {t("login.submitButton")}
+        </Button>
       </form>
+      <button
+        type="button"
+        className={cn(buttonVariants({ variant: "outline" }), "flex gap-2")}
+        onClick={() => {
+          signInWithOauth("google");
+        }}
+      >
+        <Icons.google width={16} />
+        Google
+      </button>
     </Form>
   );
 }

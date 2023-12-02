@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { useTranslation } from "react-i18next";
 
 import {
   DropdownMenu,
@@ -14,10 +15,11 @@ import { api } from "~/trpc/react";
 
 export function UserAccountNav() {
   const { data: user } = api.auth.getProfile.useQuery();
+  const { t } = useTranslation();
 
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger>Settings</DropdownMenuTrigger>
+      <DropdownMenuTrigger>{t("userAccountNav.settings")}</DropdownMenuTrigger>
       <DropdownMenuContent align="end">
         <div className="flex items-center justify-start gap-2 p-2">
           <div className="flex flex-col space-y-1 leading-none">
@@ -31,10 +33,10 @@ export function UserAccountNav() {
         </div>
         <DropdownMenuSeparator />
         <DropdownMenuItem asChild>
-          <Link href="/dashboard">Dashboard</Link>
+          <Link href="/dashboard">{t("userAccountNav.dashboard")}</Link>
         </DropdownMenuItem>
         <DropdownMenuItem asChild>
-          <Link href="/billing">Billing</Link>
+          <Link href="/dashboard/billing">{t("userAccountNav.billing")}</Link>
         </DropdownMenuItem>
         <DropdownMenuSeparator />
         <DropdownMenuItem
@@ -44,7 +46,7 @@ export function UserAccountNav() {
             void supabase().auth.signOut();
           }}
         >
-          Sign out
+          {t("userAccountNav.logout")}
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>

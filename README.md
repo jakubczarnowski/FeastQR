@@ -1,20 +1,25 @@
-# T3 stack + Supabase + App directory + I18n
+# T3 stack + Supabase + App directory
 
 This project is Edge ready (Vercel Edge runtime)
 
 This is a starter project/boilerplate to start out with:
 
 - TRPC
-- App directory
+- App directory/router
 - Prisma
-- Supabase (Auth, Migrations, Multiple Environments, CI/CD, Storage)
-- Tailwind / Shadcn/UI
-- Configured Themes
+- Supabase (Auth, Storage, Serverless Queries)
+- Tailwind
 - Edge Ready
 - Umami analytics
-- I18n with i18next
-- Fully set up CI/CD out of the box, all you have to do is add the secrets!
-- And many more little life savers!
+
+It allows us to call database in server components through supabase-js, for client component we are using trpc+prisma due to the superior DX
+
+## Projects using this starter
+
+- PortfolioQuiz [Website](https://www.portfolio-quiz.com/)
+- Friendly Macros [Repo](https://github.com/F-PTS/FriendlyMacros) [Website](https://friendly-macros.vercel.app/)
+- Twitter Clone [Repo](https://github.com/F-PTS/Blogg) [Website](https://blogg-f-pts.vercel.app/)
+- Instagram Clone [Repo](https://github.com/jakubczarnowski/instagram-clone) [Website](https://instagram-clone-eight-mu.vercel.app/)
 
 ## What's next? How do I make an app with this?
 
@@ -72,7 +77,6 @@ If you are not familiar with the different technologies used in this project, pl
 - [Tailwind CSS](https://tailwindcss.com)
 - [tRPC](https://trpc.io)
 - [Supabase](https://supabase.com/docs)
-- [shadcn/ui](https://ui.shadcn.com/)
 
 ## Learn More
 
@@ -86,7 +90,3 @@ You can check out the [create-t3-app GitHub repository](https://github.com/t3-os
 ## How do I deploy this?
 
 Follow deployment guides for [Vercel](https://create.t3.gg/en/deployment/vercel), [Netlify](https://create.t3.gg/en/deployment/netlify) and [Docker](https://create.t3.gg/en/deployment/docker) for more information.
-
-## Dont need Internalization?
-
-I know, that's a rare request to have. Checkout out [this](https://github.com/Jaaneek/t3-supabase-app-router) repo for more 'lightweight' version!

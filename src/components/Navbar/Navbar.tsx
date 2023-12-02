@@ -7,16 +7,17 @@ import { cn } from "~/utils/cn";
 import { buttonVariants } from "../ui/button";
 import Link from "next/link";
 import { useUser } from "~/providers/AuthProvider/AuthProvider";
-import { ColorModeToggle } from "../ColorModeToggle";
 import { LanguageToggle } from "../LanguageToggle/LanguageToggle";
+import { useTranslation } from "react-i18next";
+import { TranslatedText } from "../TranslatedText";
 
 const navbarItems: NavItem[] = [
   {
-    title: "Home",
+    title: <TranslatedText id="navbar.home"></TranslatedText>,
     href: "/",
   },
   {
-    title: "Dashboard",
+    title: <TranslatedText id="navbar.dashboard"></TranslatedText>,
     href: "/dashboard",
   },
 ];
@@ -24,13 +25,13 @@ const navbarItems: NavItem[] = [
 export const Navbar = () => {
   const { user } = useUser();
   const userLoggedIn = !!user;
+  const { t } = useTranslation();
 
   return (
     <header className="sticky top-0 z-40 border-b bg-background/80 backdrop-blur-sm">
       <div className="container flex h-16 items-center justify-between py-4">
         <MainNav items={navbarItems} />
         <div className="flex items-center justify-center gap-4">
-          <ColorModeToggle />
           <LanguageToggle />
           {userLoggedIn ? (
             <UserAccountNav />
@@ -42,7 +43,7 @@ export const Navbar = () => {
                 "px-4",
               )}
             >
-              Login
+              {t("navbar.login")}
             </Link>
           )}
         </div>

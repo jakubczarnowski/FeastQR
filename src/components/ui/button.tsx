@@ -51,7 +51,9 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
         ref={ref}
         {...props}
       >
-        {loading && <Spinner className="absolute text-primary" />}
+        {loading && (
+          <Spinner className="absolute text-primary-foreground dark:text-primary " />
+        )}
         {loading ? <span className="opacity-0"> {children}</span> : children}
       </button>
     );

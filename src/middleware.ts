@@ -20,7 +20,7 @@ const hasLanguageInHeader = (req: NextRequest) => {
   return nextUrlHeader && nextUrlHeader.indexOf(`"lng":"`) > -1;
 };
 
-export function middleware(req: NextRequest) {
+export async function middleware(req: NextRequest) {
   const response = NextResponse.next();
 
   if (
@@ -31,7 +31,7 @@ export function middleware(req: NextRequest) {
   }
 
   const languageInSearchParams = acceptLanguage.get(
-    req.nextUrl.searchParams.get(searchParamName)
+    req.nextUrl.searchParams.get(searchParamName),
   );
   const languageInAcceptHeader = getLanguageFromAcceptHeader(req.headers);
   const languageInCookie = getLanguageFromCookie(req.cookies);

@@ -19,6 +19,10 @@ export const env = createEnv({
       .default("development"),
     SUPABASE_SERVICE_KEY: z.string().min(1),
     DIRECT_URL: z.string().min(1),
+    LEMON_SQUEEZY_API_KEY: z.string().min(1),
+    LEMONS_SQUEEZY_SIGNATURE_SECRET: z.string().min(1),
+    LEMON_SQUEEZY_STORE_ID: z.string().min(1),
+    LEMON_SQUEEZY_SUBSCRIPTION_VARIANT_ID: z.string().min(1),
   },
 
   /**
@@ -44,6 +48,12 @@ export const env = createEnv({
     NEXT_PUBLIC_SUPABASE_ANON_KEY: process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY,
     SUPABASE_SERVICE_KEY: process.env.SUPABASE_SERVICE_KEY,
     NEXT_PUBLIC_UMAMI_WEBSITE_ID: process.env.NEXT_PUBLIC_UMAMI_WEBSITE_ID,
+    LEMONS_SQUEEZY_SIGNATURE_SECRET:
+      process.env.LEMONS_SQUEEZY_SIGNATURE_SECRET,
+    LEMON_SQUEEZY_API_KEY: process.env.LEMON_SQUEEZY_API_KEY,
+    LEMON_SQUEEZY_STORE_ID: process.env.LEMON_SQUEEZY_STORE_ID,
+    LEMON_SQUEEZY_SUBSCRIPTION_VARIANT_ID:
+      process.env.LEMON_SQUEEZY_SUBSCRIPTION_VARIANT_ID,
   },
   /**
    * Run `build` or `dev` with `SKIP_ENV_VALIDATION` to skip env validation. This is especially

@@ -7,9 +7,11 @@ import { cn } from "~/utils/cn";
 import { Icons } from "~/components/Icons";
 import { MobileNav } from "./MobileNav";
 import { type Route } from "next";
+import Icon from "~/assets/icon.png";
+import Image from "next/image";
 
 export type NavItem = {
-  title: string;
+  title: string | React.ReactNode;
   href: Route<string>;
   disabled?: boolean;
   mobileOnly?: boolean;
@@ -27,7 +29,10 @@ export function MainNav({ items, children }: MainNavProps) {
   return (
     <div className="flex gap-6 md:gap-10">
       <Link href="/" className="hidden items-center space-x-2 md:flex">
-        MyApp
+        <div className="flex items-center gap-3">
+          <Image src={Icon} alt="Icon" height={30} />
+          <span className="text-xl font-semibold">FeastQR</span>
+        </div>
       </Link>
       {items?.length ? (
         <nav className="hidden gap-6 md:flex">
@@ -54,7 +59,7 @@ export function MainNav({ items, children }: MainNavProps) {
         onClick={() => setShowMobileMenu(!showMobileMenu)}
       >
         {showMobileMenu ? <Icons.close /> : <Icons.menu />}
-        <span className="font-bold">FreeLogo.dev</span>
+        <span className="font-bold">FeastQR</span>
       </button>
       {showMobileMenu && items && (
         <MobileNav items={items}>{children}</MobileNav>

@@ -22,25 +22,48 @@ const registerValidationSchema = (translate: TFunction) =>
       email: z.string().email(),
       password: z
         .string()
-        .min(8, translate("register.passwordLengthValidation"))
-        .regex(/[A-Z]/, translate("register.passwordUppercaseValidation"))
-        .regex(/[a-z]/, translate("register.passwordLowercaseValidation"))
+        .min(8, translate("common.passwordLengthValidation"))
+        .regex(/[A-Z]/, translate("common.passwordUppercaseValidation"))
+        .regex(/[a-z]/, translate("common.passwordLowercaseValidation"))
         .regex(
           /[^A-Za-z0-9]/,
-          translate("register.passwordSpecialCharacterValidation"),
+          translate("common.passwordSpecialCharacterValidation"),
         ),
       passwordConfirmation: z.string(),
     })
     .refine((data) => data.password === data.passwordConfirmation, {
-      message: translate("register.passwordConfirmationValidation"),
+      message: translate("common.passwordConfirmationValidation"),
       path: ["passwordConfirmation"],
     });
 
 type RegisterFormValues = ZodReturnType<typeof registerValidationSchema>;
 
+const translations = {
+  en: {
+    hello: "Hello",
+    confirmYourEmailAddress: "Confirm your email address.",
+    resetYourEmail: "Reset your email.",
+    confirmYourEmailAddressDescription:
+      "Please confirm your email address by clicking the button below.",
+    resetYourEmailDescription:
+      "Click the button below to reset your email address.",
+    buttonText: "Continue",
+    orCopyAndPaste: "or copy and paste this URL into your browser:",
+  },
+  pl: {
+    hello: "Witaj",
+    confirmYourEmailAddress: "Potwierdź swój adres email.",
+    resetYourEmail: "Zresetuj Adres Email.",
+    confirmYourEmailAddressDescription:
+      "Potwierdź swój adres email klikając w przycisk poniżej.",
+    buttonText: "Kontynuuj",
+    orCopyAndPaste: "lub skopiuj i wklej ten adres URL do przeglądarki:",
+  },
+};
+
 export function UserAuthForm() {
   const { toast } = useToast();
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const form = useForm<RegisterFormValues>({
     resolver: zodResolver(registerValidationSchema(t)),
     defaultValues: {
@@ -49,13 +72,19 @@ export function UserAuthForm() {
       passwordConfirmation: "",
     },
   });
+
   const onSubmit = async (data: RegisterFormValues) => {
     try {
-      await supabase().auth.signUp(data);
+      await supabase().auth.signUp({
+        ...data,
+        options: {
+          data: translations[i18n.language as "en" | "pl"],
+        },
+      });
 
       toast({
-        title: "Account created.",
-        description: "Creation successful!",
+        title: t("register.checkYourEmailForConfirmation"),
+        description: t("common.confirmYourEmail"),
         variant: "default",
         duration: 9000,
       });
@@ -81,7 +110,7 @@ export function UserAuthForm() {
           control={form.control}
           name="email"
           render={({ field }) => (
-            <FormInput label={t("register.emailLabel")}>
+            <FormInput label={t("common.emailLabel")}>
               <Input {...field} />
             </FormInput>
           )}
@@ -90,7 +119,7 @@ export function UserAuthForm() {
           control={form.control}
           name="password"
           render={({ field }) => (
-            <FormInput label={t("register.passwordLabel")}>
+            <FormInput label={t("common.passwordLabel")}>
               <Input {...field} type="password" />
             </FormInput>
           )}
@@ -99,12 +128,14 @@ export function UserAuthForm() {
           control={form.control}
           name="passwordConfirmation"
           render={({ field }) => (
-            <FormInput label={t("register.passwordConfirmLabel")}>
+            <FormInput label={t("common.passwordConfirmLabel")}>
               <Input {...field} type="password" />
             </FormInput>
           )}
         />
-        <Button type="submit">{t("register.submitButton")}</Button>
+        <Button loading={form.formState.isSubmitting} type="submit">
+          {t("register.submitButton")}
+        </Button>
       </form>
     </Form>
   );

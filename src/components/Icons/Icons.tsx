@@ -46,13 +46,23 @@ import {
   Lock,
   Flag,
   Languages,
+  ImageIcon,
+  MenuSquare,
+  MapPin,
+  Globe,
+  QrCode,
+  ExternalLink,
+  Wifi,
 } from "lucide-react";
 
 export type Icon = LucideIcon;
 
 export const Icons = {
+  wifi: Wifi,
   languages: Languages,
   logo: Command,
+  qrcode: QrCode,
+  globe: Globe,
   close: X,
   spinner: Loader2,
   chevronLeft: ChevronLeft,
@@ -60,6 +70,8 @@ export const Icons = {
   trash: Trash,
   post: FileText,
   page: File,
+  map: MapPin,
+  menuSquare: MenuSquare,
   media: Image,
   settings: Settings,
   billing: CreditCard,
@@ -67,6 +79,8 @@ export const Icons = {
   add: Plus,
   warning: AlertTriangle,
   user: User,
+  external: ExternalLink,
+  image: ImageIcon,
   arrowRight: ArrowRight,
   help: HelpCircle,
   pizza: Pizza,
