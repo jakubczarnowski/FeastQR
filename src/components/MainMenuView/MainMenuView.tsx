@@ -372,7 +372,7 @@ const SingleCategory = ({
     <div
       onClick={navigateToCategory}
       className={cn(
-        "bg-white   px-4 py-2 text-sm font-medium text-slate-500  hover:cursor-pointer",
+        "whitespace-nowrap   bg-white px-4 py-2 text-sm font-medium  text-slate-500 hover:cursor-pointer",
         inView && isLastVisibleSection && "bg-slate-200 text-black",
       )}
       id={`${category.id}-nav`}
