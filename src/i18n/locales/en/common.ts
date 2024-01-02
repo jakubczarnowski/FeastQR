@@ -259,6 +259,30 @@ const messages: Resources["common"] = {
       enterprise: "Enterprise",
       contactUs: "(Contact us)",
     },
+    pricing: {
+      toggle: {
+        monthly: "Monthly",
+        annually: "Yearly",
+      },
+      standard: {
+        name: "Standard",
+        description: "Innovate your dining experience with online menus.",
+        feature1: "Create menu for your restaurant",
+        feature2: "Show macronutrients, allergens, and more",
+        feature3: "Menu Translations",
+      },
+      enterprise: {
+        name: "Enterprise",
+        price: "Contact Us",
+        yearlyPrice: "Contact Us",
+        description:
+          "Manage all restaurants restaurant with our powerful features and integrations.",
+        feature1: "Custom domain",
+        feature2: "Personalized branding",
+        feature3: "24/7 Support",
+        extraBenefits: "Everything in free plan, plus",
+      },
+    },
   },
   defaultLanguageSelector: {
     changeSavedTitle: "Saved",
