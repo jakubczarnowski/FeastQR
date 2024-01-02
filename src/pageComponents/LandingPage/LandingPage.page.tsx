@@ -8,6 +8,7 @@ import showcase from "~/assets/showcase.png";
 import showcaseMobile from "~/assets/showcaseMobile.png";
 import Link from "next/link";
 import { Footer } from "./molecules/Footer";
+import { PricingSection } from "./molecules/PricingSection";
 
 const poppins = Poppins({
   weight: ["300", "400", "700"],
@@ -184,25 +185,7 @@ export const LandingPage = async () => {
             />
           </div>
         </section>
-        <section className="mb-64 mt-8 w-[60%] space-y-16 lg:mt-0">
-          <h2 className="text-center text-5xl font-bold text-landing-text">
-            {t("landingPage.section3.pricingTitle")}
-          </h2>
-          <div className="flex flex-col justify-evenly gap-8 lg:flex-row lg:gap-32">
-            <div className="flex-1 rounded-xl border-2 border-landing-primary p-8">
-              <p className="text-3xl text-landing-text underline decoration-landing-primary underline-offset-2">
-                {`${t("landingPage.section3.planPro")} - 10$ / M`}
-              </p>
-              <p>{t("landingPage.section3.oneMonthFree")}</p>
-            </div>
-            <div className="flex-1 rounded-xl border-2 border-landing-accent p-8">
-              <p className="text-3xl text-landing-text underline decoration-landing-accent underline-offset-2">
-                {t("landingPage.section3.enterprise")}
-              </p>
-              <p>{t("landingPage.section3.contactUs")}</p>
-            </div>
-          </div>
-        </section>{" "}
+        <PricingSection />
       </main>
       <Footer />
     </>

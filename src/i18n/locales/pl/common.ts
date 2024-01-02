@@ -253,6 +253,31 @@ const messages = {
       enterprise: "Enterprise",
       contactUs: "(Skontaktuj się z nami)",
     },
+    pricing: {
+      toggle: {
+        monthly: "Miesięcznie",
+        annually: "Rocznie",
+      },
+      standard: {
+        name: "Standardowy",
+        description:
+          "Innowacje w Twoim doświadczeniu restauracyjnym z menu online.",
+        feature1: "Stwórz menu dla Twojej restauracji",
+        feature2: "Pokazuj makroskładniki, alergeny i więcej",
+        feature3: "Tłumaczenia menu",
+      },
+      enterprise: {
+        name: "Enterprise",
+        price: "Contact Us",
+        yearlyPrice: "Contact Us",
+        description:
+          "Zarządzaj wszystkimi swoimi restauracjami z jednego miejsca.",
+        feature1: "Własna domena",
+        feature2: "Spersonalizowany branding",
+        feature3: "Wsparcie 24/7",
+        extraBenefits: "Wszystko w darmowym planie, plus",
+      },
+    },
   },
   defaultLanguageSelector: {
     changeSavedTitle: "Zapisano",
